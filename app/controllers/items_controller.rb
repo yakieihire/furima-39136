@@ -25,6 +25,9 @@ class ItemsController < ApplicationController
     unless @item.user_id == current_user.id
       redirect_to action: :index
     end
+    if @item.purchase_record.present?
+      redirect_to action: :index
+    end
   end
 
   def update
