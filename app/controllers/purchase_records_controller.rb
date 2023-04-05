@@ -1,12 +1,10 @@
 class PurchaseRecordsController < ApplicationController
   before_action :authenticate_user!
+  before_action :non_index, only: [:index, :create]
+
   def index
     @order_form = OrderForm.new
     @item = Item.find(params[:item_id])
-
-    if @item.purchase_record.present?
-      redirect_to root_path
-    end
   end
 
   def create
@@ -33,5 +31,10 @@ class PurchaseRecordsController < ApplicationController
       card: order_params[:token],
       currency: 'jpy'
     )
+  end
+
+  def non_index
+    @item = Item.find(params[:item_id])
+    redirect_to root_path if current_user.id == @item.user_id || @item.purchase_record.present?
   end
 end
