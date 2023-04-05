@@ -1,4 +1,5 @@
 class PurchaseRecordsController < ApplicationController
+  before_action :authenticate_user!
   def index
     @order_form = OrderForm.new
     @item = Item.find(params[:item_id])
@@ -22,11 +23,10 @@ class PurchaseRecordsController < ApplicationController
   end
 
   def pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
-    Payjp::Charge.create(
-      amount: order_params[:price],
-      card: order_params[:token],
-      currency: 'jpy'
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
+    customer = Payjp::Customer.create(
+      description: 'card',
+      card: order_params[:token]
     )
   end
 end
