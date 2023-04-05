@@ -3,6 +3,10 @@ class PurchaseRecordsController < ApplicationController
   def index
     @order_form = OrderForm.new
     @item = Item.find(params[:item_id])
+
+    if @item.purchase_record.present?
+      redirect_to root_path
+    end
   end
 
   def create
@@ -24,9 +28,10 @@ class PurchaseRecordsController < ApplicationController
 
   def pay_item
     Payjp.api_key = ENV['PAYJP_SECRET_KEY']
-    customer = Payjp::Customer.create(
-      description: 'card',
-      card: order_params[:token]
+    Payjp::Charge.create(
+      amount: @item.price,
+      card: order_params[:token],
+      currency: 'jpy'
     )
   end
 end
