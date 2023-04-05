@@ -8,7 +8,7 @@ class OrderForm
     validates :prefecture_id, numericality: { other_than: 1}
     validates :municipality
     validates :address
-    validates :telephone_number, format: { with: /\A\d{10,11}\z/,}
+    validates :telephone_number, format: { with: /\A\d{10,11}\z/}
     validates :user_id
     validates :item_id
   end
