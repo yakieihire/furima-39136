@@ -1,7 +1,6 @@
 class PurchaseRecordsController < ApplicationController
   before_action :authenticate_user!
   before_action :non_index, only: [:index, :create]
-  before_action :set_item, except: [:index, :create]
 
   def index
     @order_form = OrderForm.new
@@ -37,7 +36,4 @@ class PurchaseRecordsController < ApplicationController
     redirect_to root_path if current_user.id == @item.user_id || @item.purchase_record.present?
   end
 
-  def set_item
-    @item = Item.find(params[:id])
-  end
 end
