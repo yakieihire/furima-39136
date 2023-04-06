@@ -55,7 +55,7 @@ class ItemsController < ApplicationController
   end
 
   def contributor_confirmation
-    redirect_to root_path if current_user.id == @item.user_id || @item.purchase_record.present?
+    redirect_to root_path unless current_user.id == @item.user_id || @item.purchase_record.present?
   end
 
 end
