@@ -56,12 +56,12 @@ RSpec.describe OrderForm, type: :model do
       it '郵便番号が空のとき購入できない' do
         @order_form.post_code = nil
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Post code can't be blank", "Post code is invalid")
+        expect(@order_form.errors.full_messages).to include("Post code can't be blank")
       end
       it '郵便番号が半角ハイフンが含まれていない場合、購入できない' do
         @order_form.post_code = '0001111'
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Post code is invalid")
+        expect(@order_form.errors.full_messages).to include("Post code can't be blank")
       end
       it '都道府県が未選択のとき購入できない' do
         @order_form.prefecture_id = 1
@@ -81,17 +81,17 @@ RSpec.describe OrderForm, type: :model do
       it '電話番号が空のとき購入できない' do
         @order_form.telephone_number = nil
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Telephone number can't be blank", "Telephone number is invalid")
+        expect(@order_form.errors.full_messages).to include("Telephone number can't be blank")
       end
       it '電話番号が9桁以下は購入できない' do
         @order_form.telephone_number = '123456789'
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Telephone number is invalid")
+        expect(@order_form.errors.full_messages).to include("Telephone number can't be blank")
       end
       it '電話番号が10桁以上11桁以下の半角数字でないと購入できない' do
         @order_form.telephone_number = '123456678９0'
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Telephone number is invalid")
+        expect(@order_form.errors.full_messages).to include("Telephone number can't be blank")
       end
       it 'トークンが空では購入できない' do
         @order_form.token = nil

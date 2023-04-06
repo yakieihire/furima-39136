@@ -4,11 +4,11 @@ class OrderForm
 
   with_options presence: true do
     validates :token
-    validates :post_code, format: { with: /\A[0-9]{3}-[0-9]{4}\z/}
+    validates :post_code, format: { with: /\A[0-9]{3}-[0-9]{4}\z/, message: "can't be blank"}
     validates :prefecture_id, numericality: { other_than: 1}
     validates :municipality
     validates :address
-    validates :telephone_number, format: { with: /\A\d{10,11}\z/}
+    validates :telephone_number, format: { with: /\A\d{10,11}\z/, message: "can't be blank"}
     validates :user_id
     validates :item_id
   end
